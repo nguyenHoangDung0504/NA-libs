@@ -6,6 +6,7 @@
  *      - Cố gắng đảm bảo phiên bản class ở server và client giống nhau, có thể dùng chung bằng cách code bằng `ES6` và public thư mục để dùng chung ở cả client và server.
  * - Cảnh báo:
  *      - Chưa hỗ trợ private fields (#) với các getter, setter phức tạp. Nếu sử dụng thì khả năng lỗi gần như là chắc chắn.
+ *      - Chưa hỗ trợ bảo mật, dữ liệu chỉ được chuyển thành chuỗi.
  */
 class Serializable {
     /**
@@ -241,7 +242,7 @@ class Serializable {
     static _deserializeValue(value) {
         const references = new Map(); // Khởi tạo Map nội bộ để theo dõi tham chiếu
 
-        function deserializeInternal(value) {
+        function recursiveDeserialize(value) {
             if (value && typeof value === "object" && "__type" in value) {
                 switch (value.__type) {
                     case "ref":
@@ -251,20 +252,20 @@ class Serializable {
                         references.set(value.id, instance);
                         return instance;
                     case "Array":
-                        const deserializedArray = value.data.map(deserializeInternal);
+                        const deserializedArray = value.data.map(recursiveDeserialize);
                         references.set(value.id, deserializedArray);
                         return deserializedArray;
                     case "Map":
                         const deserializedMap = new Map(
                             value.data.map(([k, v]) => [
-                                deserializeInternal(k),
-                                deserializeInternal(v),
+                                recursiveDeserialize(k),
+                                recursiveDeserialize(v),
                             ])
                         );
                         references.set(value.id, deserializedMap);
                         return deserializedMap;
                     case "Set":
-                        const deserializedSet = new Set(value.data.map(deserializeInternal));
+                        const deserializedSet = new Set(value.data.map(recursiveDeserialize));
                         references.set(value.id, deserializedSet);
                         return deserializedSet;
                     case "Date":
@@ -287,7 +288,7 @@ class Serializable {
                         const deserializedObject = {};
                         references.set(value.id, deserializedObject);
                         for (const [key, val] of Object.entries(value.data)) {
-                            deserializedObject[key] = deserializeInternal(val);
+                            deserializedObject[key] = recursiveDeserialize(val);
                         }
                         return deserializedObject;
                     default:
@@ -302,6 +303,6 @@ class Serializable {
             }
         }
 
-        return deserializeInternal(value);
+        return recursiveDeserialize(value);
     }
 }
