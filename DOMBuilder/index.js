@@ -208,7 +208,7 @@ class VideoBuilder extends DOMBuilder {
                 sourceElement.src = standardizedSource;
                 this._target.appendChild(sourceElement);
             } else {
-                console.warn(`Invalid URL: "${src}", ignoring.`);
+                throw new Error(`VideoBuilder error: URL truyền vào 'source' không hợp lệ: "${src}", bỏ qua.`);
             }
         });
 
@@ -261,7 +261,7 @@ class AudioBuilder extends DOMBuilder {
                 sourceElement.src = standardizedSource;
                 this._target.appendChild(sourceElement);
             } else {
-                console.warn(`Invalid URL: "${src}", ignoring.`);
+                throw new Error(`AudioBuilder error: URL truyền vào 'source' không hợp lệ: "${src}", bỏ qua.`);
             }
         });
 

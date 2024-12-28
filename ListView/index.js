@@ -129,7 +129,7 @@ export default class ListView {
         // Kiểm tra thuộc tính template
         if (!this._listContainer.firstElementChild.hasAttribute(ListView.TEMPLATE_ATTRIBUTE)) {
             ListView.LOG && console.error(
-                "*ListView debug log: Phần tử không có thuộc tính template.",
+                "*ListView log debug: Phần tử không có thuộc tính template.",
                 this._listContainer.firstElementChild
             );
             throw new Error(
@@ -221,7 +221,7 @@ export default class ListView {
         this.dataCollection.forEach((data, index) => {
             if (!(data instanceof this._DataType)) {
                 ListView.LOG && console.error(
-                    `*ListView debug log: Phần tử không hợp lệ ở index ${index}.`,
+                    `*ListView log debug: Phần tử không hợp lệ ở index ${index}.`,
                     data
                 );
                 throw new Error(

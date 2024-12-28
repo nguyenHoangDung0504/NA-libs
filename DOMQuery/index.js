@@ -116,7 +116,7 @@ export default class DOMQuery {
         elements.forEach((element) => {
             if (!(element instanceof Type)) {
                 console.error(`DOMQuery log debug: Phần tử với selector '${selector}' không thuộc kiểu '${Type.name}':`, element);
-                throw new Error(`DOMQuery error: Một hoặc nhiều phần tử với selector '${selector}' không thuộc kiểu '${Type.name}'. Kiểm tra log ở trên.`);
+                throw new Error(`DOMQuery error: Một hoặc nhiều phần tử với selector '${selector}' không thuộc kiểu '${Type.name}'. Kiểm tra log debug ở trên.`);
             }
         });
 
@@ -164,7 +164,7 @@ export default class DOMQuery {
         elements.forEach((element) => {
             if (!(element instanceof Type)) {
                 console.error(`DOMQuery log debug: Phần tử với className '${className}' không thuộc kiểu '${Type.name}':`, element);
-                throw new Error(`DOMQuery error: Một hoặc nhiều phần tử với className '${className}' không thuộc kiểu '${Type.name}'. Kiểm tra log ở trên.`);
+                throw new Error(`DOMQuery error: Một hoặc nhiều phần tử với className '${className}' không thuộc kiểu '${Type.name}'. Kiểm tra log debug ở trên.`);
             }
         });
 
